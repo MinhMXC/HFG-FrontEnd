@@ -1,8 +1,11 @@
+import parseFullMessages from "../helpers/parseFullMessages";
+
 interface errorTextProps {
     error: string
 }
 
 export default function ErrorText(props: errorTextProps) {
+    console.log(props.error);
     return (
         <p
             className="error-text"
@@ -11,7 +14,7 @@ export default function ErrorText(props: errorTextProps) {
                 color: props.error === "success" ? "green" : "red"
         }}
         >
-            {props.error}
+            {Array.isArray(props.error) ? parseFullMessages(props.error) : props.error}
         </p>
     )
 }

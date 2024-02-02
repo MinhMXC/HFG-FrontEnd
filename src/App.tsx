@@ -1,17 +1,35 @@
 import React from 'react';
 import './App.css';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
 import AuthRoute from "./routes/AuthRoute";
+import Header from "./components/Header";
+import MainPage from "./routes/MainPage";
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <div>Hello World!</div>
-    },
-    {
-      path: "/auth",
-      element: <AuthRoute />
+      element: (
+          <>
+            <Header />
+            <div>
+              <Outlet />
+            </div>
+          </>
+      ),
+      children: [
+        {
+          path: "/",
+          element: <div>Hello World!</div>
+        },
+        {
+          path: "/auth",
+          element: <AuthRoute />
+        },
+        {
+          path: "/activities",
+          element: <MainPage />
+        }
+      ]
     }
   ])
 

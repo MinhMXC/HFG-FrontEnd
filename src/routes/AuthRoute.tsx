@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import ErrorText from "../component/ErrorText";
+import ErrorText from "../components/ErrorText";
 import fetchWithAuth from "../helpers/fetchWithAuth";
 
 async function loginOnClick(setError: Function) {
@@ -56,9 +56,7 @@ async function signUpOnClick(date: Date, sex: string, setError: Function) {
     }
 
     const json = await fetchWithAuth("/auth", "POST", data)
-    if (json.data !== undefined)
-        console.log(json);
-    else
+    if (json.errors !== undefined)
         setError(json.errors.full_messages)
 }
 
@@ -80,7 +78,7 @@ function SignUp() {
             </LocalizationProvider>
             <FormControl sx={{ ml: 0.5 }}>
                 <p id="gender-label">Gender</p>
-                <RadioGroup row onChange={(event, value) => setSex(value)}>
+                <RadioGroup row onChange={(_, value) => setSex(value)}>
                     <FormControlLabel value="true" control={<Radio />} label="Male" />
                     <FormControlLabel value="false" control={<Radio />} label="Female" />
                 </RadioGroup>
