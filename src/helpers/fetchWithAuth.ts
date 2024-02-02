@@ -1,6 +1,5 @@
 import Cookies from "js-cookie"
 import APP_CONSTANTS from "./CONSTANTS";
-import {unmountComponentAtNode} from "react-dom";
 
 const accessToken = 'access-token'
 const client = 'client'

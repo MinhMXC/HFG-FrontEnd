@@ -76,7 +76,7 @@ function SignUp() {
             <TextField id="full_name" label="Full Name" variant="outlined" />
             <TextField id="handphone" label="Handphone" variant="outlined" />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker onChange={(value, context) => setDate(value as Date)} label="Date of Birth" />
+                <DatePicker onChange={(value, _) => setDate(value as Date)} label="Date of Birth" />
             </LocalizationProvider>
             <FormControl sx={{ ml: 0.5 }}>
                 <p id="gender-label">Gender</p>
