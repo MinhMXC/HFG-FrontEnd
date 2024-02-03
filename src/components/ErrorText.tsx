@@ -5,7 +5,6 @@ interface errorTextProps {
 }
 
 export default function ErrorText(props: errorTextProps) {
-    console.log(props.error);
     return (
         <p
             className="error-text"

@@ -23,6 +23,15 @@ body {
   justify-content: center;
 }
 
+.standard-container {
+  background-color: white;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
+}
+
 /*Header*/
 
 header {
@@ -62,7 +71,7 @@ header {
 
 /*Auth*/
 
-.login-signup-container {
+#login-signup-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -71,13 +80,7 @@ header {
 }
 
 .auth-container {
-  background-color: white;
   width: 600px;
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
 }
 
 #gender-label {
@@ -86,24 +89,41 @@ header {
 
 /*ViewUserRoute*/
 
-#view-user {
+#view-user-container {
   display: flex;
   width: 900px;
-  box-sizing: border-box;
-  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
+  gap: 20px;
+}
+
+#view-user-name {
+  margin-bottom: 10px;
+}
+
+#view-user-age {
+  font-size: 20px;
+}
+
+#view-user-gender {
+  font-size: 20px;
+}
+
+#view-user-information-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#view-user-contact-information-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 /*Create Activity*/
 
 #create-activity-container {
   width: 900px;
-  background-color: white;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
 }

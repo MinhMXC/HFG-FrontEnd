@@ -6,6 +6,6 @@ export default interface User {
     handphone: number,
     is_male: boolean,
     is_admin: boolean,
-    created_at: bigint,
-    updated_at: bigint
+    created_at: number,
+    updated_at: number
 }

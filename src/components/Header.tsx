@@ -2,11 +2,9 @@ import TemporaryDrawer from "./TemporaryDrawer";
 import React, {useEffect, useState} from "react";
 import {Avatar, Button, IconButton} from "@mui/material";
 import {Menu} from "@mui/icons-material";
-import User from "../interfaces/User";
 import fetchWithAuth from "../helpers/fetchWithAuth";
 import SimpleUser from "../interfaces/SimpleUser";
-import FetchResponse from "../interfaces/FetchResponse";
-import {NavigateFunction, useNavigate} from "react-router-dom";
+import {NavigateFunction, useLocation, useNavigate} from "react-router-dom";
 
 function SearchBar() {
     return (
@@ -45,6 +43,7 @@ function UserInfoButton(props: {
 
 export default function Header() {
     const navigate = useNavigate()
+    const location = useLocation()
     const [open, setOpen] = useState<boolean>(false);
     const [user, setUser] = useState<SimpleUser>( { id: -2, full_name: "", image: "" })
 
@@ -53,7 +52,7 @@ export default function Header() {
             .then(json => json.status === "success"
                 ? setUser(json.data as SimpleUser)
                 : setUser({id: -1, full_name: "", image: "_"}))
-    }, [])
+    }, [location])
 
     const toggleDrawer =
         (open: boolean) =>

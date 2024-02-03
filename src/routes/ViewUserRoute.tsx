@@ -8,18 +8,22 @@ export default function ViewUserRoute() {
     const user = useLoaderData() as User
 
     return (
-        <div id="view-user-container">
-            <Avatar alt={user.full_name} src={user.image === null ? img : user.image} />
-            <div>
-                <p>{user.full_name}</p>
-                <p>{user.age}</p>
-                <p>{user.is_male ? "Male": "Female"}</p>
+        <div className="standard-container" id="view-user-container">
+            <Avatar
+                alt={user.full_name}
+                src={user.image === null ? img : user.image}
+                sx={{ width: 200, height: 200 }}
+            />
+            <div id="view-user-information-container">
+                <h1 id="view-user-name">{user.full_name}</h1>
+                <p id="view-user-age">Age: {user.age}</p>
+                <p id="view-user-gender">Gender: {user.is_male ? "Male": "Female"}</p>
 
-                <div>
+                <div id="view-user-contact-information-container">
                     <ContactPhone />
-                    <p>{user.handphone}</p>
-                    <Email />
-                    <p>{user.email}</p>
+                    <p>+{user.handphone}</p>
+                    <Email sx={{ ml: "20px" }} />
+                    <a href={`mailto://${user.email}`}>{user.email}</a>
                 </div>
             </div>
         </div>

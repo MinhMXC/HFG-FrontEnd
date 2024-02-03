@@ -10,6 +10,7 @@ import ActivityRoute from "./routes/ActivityRoute";
 import activityLoader from "./loaders/activityLoader";
 import ErrorPage from "./components/ErrorPage";
 import CreateActivityRoute from "./routes/CreateActivityRoute";
+import UpdateActivityRoute from "./routes/UpdateActivityRoute";
 
 function App() {
   const router = createBrowserRouter([
@@ -46,6 +47,12 @@ function App() {
         {
           path: "activities/create",
           element: <CreateActivityRoute />
+        },
+        {
+          path: "activities/update/:id",
+          element: <UpdateActivityRoute />,
+          loader: activityLoader,
+          errorElement: <ErrorPage />
         },
         {
           path: "*",

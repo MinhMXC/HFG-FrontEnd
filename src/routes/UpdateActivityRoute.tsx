@@ -1,13 +1,14 @@
+import {NavigateFunction, useLoaderData, useNavigate} from "react-router-dom";
+import {useState} from "react";
 import {Button, TextField} from "@mui/material";
 import {DateTimePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {useState} from "react";
-import fetchWithAuth from "../helpers/fetchWithAuth";
-import {NavigateFunction, useNavigate} from "react-router-dom";
-import Activity from "../interfaces/Activity";
 import ErrorText from "../components/ErrorText";
+import fetchWithAuth from "../helpers/fetchWithAuth";
+import Activity from "../interfaces/Activity";
+import dayjs from "dayjs";
 
-interface CreateActivityData {
+interface UpdateActivityData {
     title: string,
     overview: string,
     body: string,
@@ -18,17 +19,17 @@ interface CreateActivityData {
     time_end: number | undefined
 }
 
-async function createActivityOnClick(data: CreateActivityData, setError: Function, navigate: NavigateFunction) {
+async function updateActivityOnClick(data: UpdateActivityData, setError: Function, navigate: NavigateFunction) {
     const res = await fetchWithAuth("/activities", "POST", data)
     console.log(res)
     if (res.status === "error")
         setError(res.errors.full_messages)
     else
         navigate(`/activities/${(res.data as Activity).id}`)
-
 }
 
-export default function CreateActivityRoute() {
+export default function UpdateActivityRoute() {
+    const activity = useLoaderData() as Activity
     const navigate = useNavigate()
     const [timeStart, setTimeStart] = useState<Date | null>(null)
     const [timeEnd, setTimeEnd] = useState<Date | null>(null)
@@ -37,20 +38,27 @@ export default function CreateActivityRoute() {
 
     return (
         <div className="standard-container" id="create-activity-container">
-            <TextField id="title" label="Title" />
-            <TextField id="overview" label="Overview" />
-            <TextField id="body" label="Body" multiline />
-            <TextField id="image" label="Image URL" />
-            <TextField id="manpower_needed" label="Manpower Needed" onChange={(event) => setManpowerNeeded(event.target.value)} />
-            <TextField id="location" label="Locaton" />
+            <TextField id="title" label="Title" defaultValue={activity.title} />
+            <TextField id="overview" label="Overview" defaultValue={activity.overview} />
+            <TextField id="body" label="Body" multiline defaultValue={activity.body} />
+            <TextField id="image" label="Image URL" defaultValue={activity.image} />
+            <TextField
+                id="manpower_needed"
+                label="Manpower Needed"
+                defaultValue={activity.manpower_needed}
+                onChange={(event) => setManpowerNeeded(event.target.value)}
+            />
+            <TextField id="location" label="Locaton" defaultValue={activity.location} />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
                     label="Time Start"
-                    onChange={(value, _) => setTimeStart(value as Date)}
+                    defaultValue={dayjs(activity.time_start)}
+                    onChange={(value, _) => setTimeStart(value as any as Date)}
                 />
                 <DateTimePicker
                     label="Time End"
-                    onChange={(value, _) => setTimeEnd(value as Date)}
+                    defaultValue={dayjs(activity.time_end)}
+                    onChange={(value, _) => setTimeEnd(value as any as Date)}
                 />
             </LocalizationProvider>
 
@@ -59,7 +67,7 @@ export default function CreateActivityRoute() {
             <Button
                 disableElevation
                 variant="contained"
-                onClick={() => createActivityOnClick({
+                onClick={() => updateActivityOnClick({
                         title: (document.getElementById("title") as HTMLInputElement).value,
                         overview: (document.getElementById("overview") as HTMLInputElement).value,
                         body: (document.getElementById("body") as HTMLInputElement).value,

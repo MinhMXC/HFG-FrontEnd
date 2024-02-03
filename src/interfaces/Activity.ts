@@ -6,8 +6,8 @@ export default interface Activity {
     image: null | string,
     manpower_needed: number,
     location: string,
-    time_start: bigint,
-    time_end: bigint,
-    created_at: bigint,
-    updated_at: bigint
+    time_start: number,
+    time_end: number,
+    created_at: number,
+    updated_at: number
 }

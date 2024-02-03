@@ -13,21 +13,24 @@ import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import ErrorText from "../components/ErrorText";
 import fetchWithAuth from "../helpers/fetchWithAuth";
+import {NavigateFunction, useNavigate} from "react-router-dom";
 
-async function loginOnClick(setError: Function) {
+async function loginOnClick(setError: Function, navigate: NavigateFunction) {
     const data = {
         email: (document.getElementById("email") as HTMLInputElement).value,
         password: (document.getElementById("password") as HTMLInputElement).value
     }
 
     const json = await fetchWithAuth("/auth/sign_in", "POST", data)
-    if (json.data !== undefined)
-        console.log(json);
-    else
+    if (json.status === "error")
         setError(json.errors.full_messages)
+    else
+        navigate("/")
 }
 
-function Login() {
+function Login(props: {
+    navigate: NavigateFunction
+}) {
     const [error, setError] = useState<string>("")
 
     return (
@@ -38,35 +41,39 @@ function Login() {
             <Button
                 disableElevation
                 variant="contained"
-                onClick={() => loginOnClick(setError)}
+                onClick={() => loginOnClick(setError, props.navigate)}
             >Login</Button>
         </div>
     )
 }
 
-async function signUpOnClick(date: Date, sex: string, setError: Function) {
+async function signUpOnClick(date: Date | undefined, sex: string, setError: Function, navigate: NavigateFunction) {
     const data = {
         email: (document.getElementById("email") as HTMLInputElement).value,
         password: (document.getElementById("password") as HTMLInputElement).value,
         password_confirmation: (document.getElementById("confirm_password") as HTMLInputElement).value,
         full_name: (document.getElementById("full_name") as HTMLInputElement).value,
         handphone: (document.getElementById("handphone") as HTMLInputElement).value,
-        age: (new Date(date)).getTime() / 1000,
-        is_male: sex === "true"
+        age: date === undefined ? undefined : (new Date(date)).getTime() / 1000,
+        is_male: sex === "true" ? true : sex === "false"  ? false : undefined
     }
 
     const json = await fetchWithAuth("/auth", "POST", data)
-    if (json !== undefined)
+    if (json.status === "error")
         setError(json.errors.full_messages)
+    else
+        navigate(`/users/${json.data.id}`)
 }
 
-function SignUp() {
-    const [date, setDate] = useState<Date>(new Date())
+function SignUp(props: {
+    navigate: NavigateFunction
+}) {
+    const [date, setDate] = useState<Date | undefined>(undefined)
     const [sex, setSex] = useState<string>("")
     const [error, setError] = useState<string>("")
 
     return (
-        <div className="login-signup-container">
+        <div className="standard-container" id="login-signup-container">
             <TextField id="email" label="Email" variant="outlined" />
             <TextField id="password" label="Password" type="password" variant="outlined" />
             <TextField id="confirm_password" label="Confirm Password" type="password" variant="outlined" />
@@ -87,7 +94,7 @@ function SignUp() {
             <Button
                 disableElevation
                 variant="contained"
-                onClick={() => signUpOnClick(date, sex, setError)}
+                onClick={() => signUpOnClick(date, sex, setError, props.navigate)}
             >Sign Up</Button>
         </div>
     )
@@ -110,6 +117,7 @@ function TabPanel(props: TablePanelProps) {
 }
 
 export default function AuthRoute() {
+    const navigate = useNavigate()
     const [value, setValue] = React.useState(0)
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue)
@@ -122,10 +130,10 @@ export default function AuthRoute() {
                 <Tab label="Sign Up" />
             </Tabs>
             <TabPanel index={0} value={value}>
-                <Login />
+                <Login navigate={navigate} />
             </TabPanel>
             <TabPanel index={1} value={value} >
-                <SignUp />
+                <SignUp navigate={navigate} />
             </TabPanel>
         </div>
     )
