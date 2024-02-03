@@ -9,12 +9,47 @@ p {
 
 body {
   font-family: "Roboto", serif;
+  background-color: #FFF0F5;
 }
+
+#outlet {
+  display: flex;
+  justify-content: center;
+}
+
+#error-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/*Header*/
 
 header {
   width: 100%;
   height: 60px;
-  background-color: red;
+  background-color: #D1000A;
+  display: flex;
+  align-items: center;
+}
+
+#full_name_header {
+  margin-left: 10px;
+  color: black;
+  font-size: 20px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+#search-bar-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+#login-signup-button-container {
+  display: flex;
+  gap: 10px;
+  margin-right: 20px;
 }
 
 /*ErrorText*/
@@ -36,6 +71,7 @@ header {
 }
 
 .auth-container {
+  background-color: white;
   width: 600px;
   margin-top: 20px;
   padding: 20px;
@@ -46,4 +82,28 @@ header {
 
 #gender-label {
   align-self: start;
+}
+
+/*ViewUserRoute*/
+
+#view-user {
+  display: flex;
+  width: 900px;
+  box-sizing: border-box;
+  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
+}
+
+/*Create Activity*/
+
+#create-activity-container {
+  width: 900px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
 }

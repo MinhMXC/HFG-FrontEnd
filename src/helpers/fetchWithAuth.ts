@@ -1,16 +1,23 @@
 import Cookies from "js-cookie"
 import APP_CONSTANTS from "./CONSTANTS";
+import FetchResponse from "../interfaces/FetchResponse";
 
 const accessToken = 'access-token'
 const client = 'client'
 const expiry = 'expiry'
 const uid = 'uid'
 
+interface BackendResponse {
+    status: string,
+    data?: any,
+    errors?: any,
+}
+
 export default async function fetchWithAuth(
     url: string,
     method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
     data: any = undefined
-) {
+): Promise<FetchResponse> {
     try {
         const res = await fetch(APP_CONSTANTS.BACKEND_URL + url, {
             method: method,
@@ -27,9 +34,11 @@ export default async function fetchWithAuth(
         if (res.headers.get(accessToken))
             saveToken(res)
 
-        return await res.json()
+        const json = await res.json() as any as BackendResponse
+        return { status: json.status, response_code: res.status, data: json.data, errors: json.errors }
     } catch(error) {
-        return error;
+        console.log(error)
+        return { status: "error", response_code: 500, data: undefined, errors: "Something very wrong happened" }
     }
 }
 

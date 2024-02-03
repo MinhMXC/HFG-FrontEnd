@@ -56,7 +56,7 @@ async function signUpOnClick(date: Date, sex: string, setError: Function) {
     }
 
     const json = await fetchWithAuth("/auth", "POST", data)
-    if (json.errors !== undefined)
+    if (json !== undefined)
         setError(json.errors.full_messages)
 }
 

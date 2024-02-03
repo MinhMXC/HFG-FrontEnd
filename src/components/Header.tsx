@@ -1,10 +1,60 @@
 import TemporaryDrawer from "./TemporaryDrawer";
-import React, {useState} from "react";
-import {IconButton} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Avatar, Button, IconButton} from "@mui/material";
 import {Menu} from "@mui/icons-material";
+import User from "../interfaces/User";
+import fetchWithAuth from "../helpers/fetchWithAuth";
+import SimpleUser from "../interfaces/SimpleUser";
+import FetchResponse from "../interfaces/FetchResponse";
+import {NavigateFunction, useNavigate} from "react-router-dom";
+
+function SearchBar() {
+    return (
+        <div id="search-bar-container">
+
+        </div>
+    )
+}
+
+function LoginSignUpButtons(props: {
+    navigate: NavigateFunction
+}) {
+    const navigate = props.navigate
+    return (
+        <div id="login-signup-button-container">
+            <Button disableElevation variant="contained" onClick={() => navigate("/auth")}>Login</Button>
+            <Button disableElevation variant="contained"  onClick={() => navigate("/auth")}>Sign Up</Button>
+        </div>
+    )
+}
+
+function UserInfoButton(props: {
+    user: SimpleUser,
+    navigate: NavigateFunction
+}) {
+    const user = props.user
+    const navigate = props.navigate
+
+    return (
+        <Button disableElevation onClick={() => navigate(`/users/${user.id}`)} sx={{ mr: "10px" }}>
+            <Avatar alt={user.full_name} src={user.image!} />
+            <p id="full_name_header">{user.full_name}</p>
+        </Button>
+    )
+}
 
 export default function Header() {
+    const navigate = useNavigate()
     const [open, setOpen] = useState<boolean>(false);
+    const [user, setUser] = useState<SimpleUser>( { id: -2, full_name: "", image: "" })
+
+    useEffect( () => {
+        fetchWithAuth("/current_user", "GET")
+            .then(json => json.status === "success"
+                ? setUser(json.data as SimpleUser)
+                : setUser({id: -1, full_name: "", image: "_"}))
+    }, [])
+
     const toggleDrawer =
         (open: boolean) =>
             (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -21,9 +71,20 @@ export default function Header() {
 
     return (
         <header>
-            <IconButton onClick={toggleDrawer(!open)}>
+            <IconButton onClick={toggleDrawer(!open)} sx={{ ml: "10px" }}>
                 <Menu />
             </IconButton>
+
+            <SearchBar></SearchBar>
+
+            {
+                user.id === -1
+                    ? <LoginSignUpButtons navigate={navigate} />
+                    : user.id > 0
+                    ? <UserInfoButton user={user} navigate={navigate} />
+                    : undefined
+            }
+
             <TemporaryDrawer open={open} setOpen={setOpen} toggleDrawer={toggleDrawer} />
         </header>
     )

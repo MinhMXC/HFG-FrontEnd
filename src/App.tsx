@@ -1,9 +1,15 @@
 import React from 'react';
 import './App.css';
-import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, Outlet, RouterProvider} from "react-router-dom";
 import AuthRoute from "./routes/AuthRoute";
 import Header from "./components/Header";
 import MainPage from "./routes/MainPage";
+import ViewUserRoute from "./routes/ViewUserRoute";
+import viewUserLoader from "./loaders/viewUserLoader";
+import ActivityRoute from "./routes/ActivityRoute";
+import activityLoader from "./loaders/activityLoader";
+import ErrorPage from "./components/ErrorPage";
+import CreateActivityRoute from "./routes/CreateActivityRoute";
 
 function App() {
   const router = createBrowserRouter([
@@ -11,7 +17,7 @@ function App() {
       element: (
           <>
             <Header />
-            <div>
+            <div id="outlet">
               <Outlet />
             </div>
           </>
@@ -19,16 +25,32 @@ function App() {
       children: [
         {
           path: "/",
-          element: <div>Hello World!</div>
+          element: <MainPage />
         },
         {
           path: "/auth",
           element: <AuthRoute />
         },
         {
-          path: "/activities",
-          element: <MainPage />
-        }
+          path: "/users/:id",
+          element: <ViewUserRoute />,
+          loader: viewUserLoader,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "activities/:id",
+          element: <ActivityRoute />,
+          loader: activityLoader,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "activities/create",
+          element: <CreateActivityRoute />
+        },
+        {
+          path: "*",
+          element: <Navigate to="/" replace/>
+        },
       ]
     }
   ])

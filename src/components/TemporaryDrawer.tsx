@@ -25,18 +25,9 @@ function DrawerList(props: ListProps) {
             onKeyDown={props.onKeyDown}
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <Link to={text === 'Inbox' ? "/" : "/main"}>
-                            <ListItemButton>
-                                {text}
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                            </ListItemButton>
-                        </Link>
-                    </ListItem>
-                ))}
+                <ListItem key="Create Activity" disablePadding>
+                    <ListItemButton href="/activities/create">Create Activity</ListItemButton>
+                </ListItem>
             </List>
             <Divider />
             <List>
