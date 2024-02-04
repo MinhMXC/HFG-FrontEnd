@@ -1,9 +1,17 @@
 import fetchWithAuth from "../helpers/fetchWithAuth";
 
 export default async function activityLoader({params}: any) {
-    const res = await fetchWithAuth(`/activities/${params.id}`, "GET")
-    if (res.status === "error")
-        throw new Response(res.errors.full_messages, {status: res.response_code})
+    const resActivity = await fetchWithAuth(`/activities/${params.id}`, "GET")
+    if (resActivity.status === "error")
+        throw new Response(resActivity.errors.full_messages, {status: resActivity.response_code})
 
-    return res.data
+    const resApplications = await fetchWithAuth(`/applications/activity/${params.id}`, "GET")
+    if (resApplications.status === "error")
+        throw new Response(resApplications.errors.full_messages, {status: resApplications.response_code})
+
+    const resAttendances = await fetchWithAuth(`/attendances/activity/${params.id}`, "GET")
+    if (resAttendances.status === "error")
+        throw new Response(resAttendances.errors.full_messages, {status: resAttendances.response_code})
+
+    return { activity: resActivity.data, applications: resApplications.data, attendances: resAttendances.data }
 }

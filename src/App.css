@@ -7,6 +7,10 @@ p {
   margin: 0;
 }
 
+li {
+  margin-bottom: 5px;
+}
+
 body {
   font-family: "Roboto", serif;
   background-color: #FFF0F5;
@@ -71,7 +75,7 @@ header {
 
 /*Auth*/
 
-#login-signup-container {
+.login-signup-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -79,7 +83,7 @@ header {
   text-align: start;
 }
 
-.auth-container {
+#auth-container {
   width: 600px;
 }
 
@@ -126,4 +130,52 @@ header {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+/*ActivityRoute*/
+
+#activity-container {
+  width: 900px;
+}
+
+#activity-title {
+  margin: 0;
+  font-size: 50px;
+}
+
+#about-this-activity {
+  margin-bottom: 5px;
+}
+
+#posted-on-container {
+  color: #8a8a8a;
+  display: flex;
+  font-weight: 500;
+}
+
+#activity-image {
+  margin-top: 20px;
+  width: 100%;
+}
+
+#activity-body {
+  margin-top: 20px;
+}
+
+.about-span {
+  font-weight: 500;
+}
+
+/*mainpage*/
+
+.activities-list {
+  padding-top: 10px;
+  max-height: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.item {
+  margin: 20px;
+  padding: 3px;
 }

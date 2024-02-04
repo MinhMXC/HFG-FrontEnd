@@ -73,7 +73,7 @@ function SignUp(props: {
     const [error, setError] = useState<string>("")
 
     return (
-        <div className="standard-container" id="login-signup-container">
+        <div className="login-signup-container">
             <TextField id="email" label="Email" variant="outlined" />
             <TextField id="password" label="Password" type="password" variant="outlined" />
             <TextField id="confirm_password" label="Confirm Password" type="password" variant="outlined" />
@@ -124,7 +124,7 @@ export default function AuthRoute() {
     }
 
     return (
-        <div className="auth-container">
+        <div className="standard-container" id="auth-container">
             <Tabs value={value} onChange={handleChange} variant="fullWidth">
                 <Tab label="Login" />
                 <Tab label="Sign Up" />
