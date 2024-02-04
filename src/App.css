@@ -127,3 +127,17 @@ header {
   flex-direction: column;
   gap: 10px;
 }
+
+/*mainpage*/
+
+.activities-list {
+  padding-top: 10px;
+  max-height: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.item {
+  margin: 20px;
+  padding: 3px;
+}
