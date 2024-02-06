@@ -22,7 +22,7 @@ async function createActivityOnClick(data: CreateActivityData, setError: Functio
     const res = await fetchWithAuth("/activities", "POST", data)
     console.log(res)
     if (res.status === "error")
-        setError(res.errors)
+        setError(res.errors.full_messages)
     else
         navigate(`/activities/${(res.data as Activity).id}`)
 

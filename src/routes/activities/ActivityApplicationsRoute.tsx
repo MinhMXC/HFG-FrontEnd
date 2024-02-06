@@ -4,17 +4,15 @@ import {Avatar, Button, Checkbox, ListItemAvatar} from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import React, {useState} from "react";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import {NavigateFunction} from "react-router-dom";
-import fetchWithAuth from "../helpers/fetchWithAuth";
-import Application from "../interfaces/Application";
-import timeAgoTextGenerator from "../helpers/timeAgoTextGenerator";
+import {NavigateFunction, useLoaderData, useNavigate, useParams} from "react-router-dom";
+import fetchWithAuth from "../../helpers/fetchWithAuth";
+import Application from "../../interfaces/Application";
+import timeAgoTextGenerator from "../../helpers/timeAgoTextGenerator";
 
-export default function ApplicationSection(props: {
-    loaderData: any
-    activity_id: number,
-    navigate: NavigateFunction
-}) {
-    const applications: Application[] = props.loaderData.applications
+export default function ActivityApplicationsRoute() {
+    const navigate = useNavigate()
+    const { id } = useParams()
+    const applications: Application[] = (useLoaderData() as any)
         .map((application: any) => {
             const app: Application = {
                 accepted: application.attributes.accepted,
@@ -42,15 +40,15 @@ export default function ApplicationSection(props: {
             if (checked[i])
                 ids.push(users[i].id)
 
-        const res = await fetchWithAuth(`/attendances/activity/${props.activity_id}`, "POST",{ attendance: { user_ids: ids }})
+        const res = await fetchWithAuth(`/activity/${id}/attendances`, "POST", { attendance: { user_ids: ids }})
         if (res.status === "error") {
             const keys = Object.keys(res.errors)
             const values = Object.values(res.errors)
             keys.forEach((key, index) => errors.set(key, values[index]))
             setError(new Map(errors))
-            console.log(errors)
         } else {
             alert("Successful")
+            navigate(0)
         }
     }
 

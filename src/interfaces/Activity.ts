@@ -1,4 +1,5 @@
 import SimpleUser from "./SimpleUser";
+import Application from "./Application";
 
 export default interface Activity {
     id: number,
@@ -12,5 +13,5 @@ export default interface Activity {
     time_end: number,
     created_at: number,
     updated_at: number,
-    applied?: boolean, //whether current user has applied, false if not signed in
+    application?: Application
 }

@@ -5,6 +5,7 @@ import {Menu} from "@mui/icons-material";
 import fetchWithAuth from "../helpers/fetchWithAuth";
 import SimpleUser from "../interfaces/SimpleUser";
 import {NavigateFunction, useLocation, useNavigate} from "react-router-dom";
+import APP_CONSTANTS from "../helpers/CONSTANTS";
 
 function SearchBar() {
     return (
@@ -45,13 +46,13 @@ export default function Header() {
     const navigate = useNavigate()
     const location = useLocation()
     const [open, setOpen] = useState<boolean>(false);
-    const [user, setUser] = useState<SimpleUser>( { id: -2, full_name: "", image: "" })
+    const [user, setUser] = useState<SimpleUser | undefined>(undefined)
 
     useEffect( () => {
         fetchWithAuth("/current_user", "GET")
             .then(json => json.status === "success"
                 ? setUser(json.data as SimpleUser)
-                : setUser({id: -1, full_name: "", image: "_"}))
+                : setUser(APP_CONSTANTS.DEFAULT_SIMPLE_USER))
     }, [location])
 
     const toggleDrawer =
@@ -77,7 +78,9 @@ export default function Header() {
             <SearchBar></SearchBar>
 
             {
-                user.id === -1
+                user === undefined
+                    ? undefined
+                    : user.id === -1
                     ? <LoginSignUpButtons navigate={navigate} />
                     : user.id > 0
                     ? <UserInfoButton user={user} navigate={navigate} />

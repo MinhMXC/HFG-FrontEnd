@@ -78,7 +78,7 @@ export default function UpdateActivityRoute() {
                         time_end: timeEnd === null ? undefined : (new Date(timeEnd)).getTime()
                     }, setError, navigate
                 )}
-            >Create Activity</Button>
+            >Update Activity</Button>
         </div>
     )
 }

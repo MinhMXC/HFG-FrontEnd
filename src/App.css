@@ -18,7 +18,8 @@ body {
 
 #outlet {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #error-page-container {
@@ -132,7 +133,7 @@ header {
   gap: 10px;
 }
 
-/*ActivityRoute*/
+/*ActivityViewRoute*/
 
 #activity-container {
   width: 900px;
@@ -164,6 +165,13 @@ header {
 
 .about-span {
   font-weight: 500;
+}
+
+/*ActivityAttendanceRoute*/
+
+.attendance_status {
+  font-weight: 500;
+  font-size: 20px;
 }
 
 /*mainpage*/

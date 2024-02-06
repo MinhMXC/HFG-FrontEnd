@@ -5,12 +5,37 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import '../App.css';
+import {ListSubheader} from "@mui/material";
 
 interface ListProps {
     onClick: () => void,
     onKeyDown: () => void
+}
+
+function UserDrawerList(props: ListProps) {
+    return (
+        <Box
+            role="presentation"
+            onClick={props.onClick}
+            onKeyDown={props.onKeyDown}
+            sx={{ width: "200px" }}
+        >
+            <List
+                subheader={<ListSubheader sx={{ color: "black", fontWeight: 800, fontSize: "20px" }}>User</ListSubheader>}
+            >
+                <ListItem disablePadding>
+                    <ListItemButton href="/">Homepage</ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton href="/">Applications</ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton href="/">Attendances</ListItemButton>
+                </ListItem>
+            </List>
+        </Box>
+    );
 }
 
 function DrawerList(props: ListProps) {
@@ -19,21 +44,14 @@ function DrawerList(props: ListProps) {
             role="presentation"
             onClick={props.onClick}
             onKeyDown={props.onKeyDown}
+            sx={{ width: "200px" }}
         >
-            <List>
-                <ListItem key="Create Activity" disablePadding>
+            <List
+                subheader={<ListSubheader sx={{ color: "black", fontWeight: 800, fontSize: "20px" }}>Admin</ListSubheader>}
+            >
+                <ListItem disablePadding>
                     <ListItemButton href="/activities/create">Create Activity</ListItemButton>
                 </ListItem>
-            </List>
-            <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, _) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
             </List>
         </Box>
     );
@@ -53,6 +71,8 @@ export default function TemporaryDrawer(props: {
                     onClose={props.toggleDrawer(false)}
                 >
                     <DrawerList onClick={() => props.setOpen(false)} onKeyDown={() => props.setOpen(false)} />
+                    <Divider />
+                    <UserDrawerList onClick={() => props.setOpen(false)} onKeyDown={() => props.setOpen(false)} />
                 </Drawer>
             </React.Fragment>
         </>
