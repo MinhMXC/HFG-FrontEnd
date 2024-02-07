@@ -8,5 +8,6 @@ export default interface User {
     is_male: boolean,
     is_admin: boolean,
     created_at: number,
-    updated_at: number
+    updated_at: number,
+    is_current_user_admin: boolean
 }

@@ -5,22 +5,18 @@ import AuthRoute from "./routes/AuthRoute";
 import Header from "./components/Header";
 import MainPage from "./routes/MainPage";
 import ViewUserRoute from "./routes/users/ViewUserRoute";
-import viewUserLoader from "./loaders/viewUserLoader";
 import ActivityBaseRoute from "./routes/activities/ActivityBaseRoute";
-import activityViewLoader from "./loaders/activityViewLoader";
 import ErrorPage from "./components/ErrorPage";
 import CreateActivityRoute from "./routes/CreateActivityRoute";
 import UpdateActivityRoute from "./routes/UpdateActivityRoute";
 import ActivityStatisticsRoute from "./routes/activities/ActivityStatisticsRoute";
 import ActivityApplicationsRoute from "./routes/activities/ActivityApplicationsRoute";
 import ActivityAttendancesRoute from "./routes/activities/ActivityAttendancesRoute";
-import activityAttendancesLoader from "./loaders/activityAttendancesLoader";
-import activityApplicationsLoader from "./loaders/activityApplicationsLoader";
 import ActivityViewRoute from "./routes/activities/ActivityViewRoute";
 import UserApplicationsRoute from "./routes/users/UserApplicationsRoute";
-import userApplicationsLoader from "./loaders/userApplicationsLoader";
 import UserAttendancesRoute from "./routes/users/UserAttendancesRoute";
-import userAttendancesLoader from "./loaders/userAttendancesLoader";
+import AllApplicationsRoute from "./routes/AllApplicationsRoute";
+import loaderFactory from "./loaders/loaderFactory";
 
 function App() {
   const router = createBrowserRouter([
@@ -36,7 +32,8 @@ function App() {
       children: [
         {
           path: "/",
-          element: <MainPage />
+          element: <MainPage />,
+          loader: loaderFactory((id) => "/activities")
         },
         {
           path: "/auth",
@@ -45,18 +42,18 @@ function App() {
         {
           path: "/users/:id",
           element: <><ViewUserRoute /><Outlet /></>,
-          loader: viewUserLoader,
+          loader: loaderFactory((id) => `/users/${id}`),
           errorElement: <ErrorPage />,
           children: [
             {
               path: "applications",
               element: <UserApplicationsRoute />,
-              loader: userApplicationsLoader,
+              loader: loaderFactory((id) => `/user/${id}/applications`),
             },
             {
               path: "attendances",
               element: <UserAttendancesRoute />,
-              loader: userAttendancesLoader,
+              loader: loaderFactory((id) => `/user/${id}/attendances`),
             }
           ]
         },
@@ -71,17 +68,17 @@ function App() {
             {
               index: true,
               element: <ActivityViewRoute />,
-              loader: activityViewLoader
+              loader: loaderFactory((id) => `/activities/${id}`),
             },
             {
               path: "applications",
               element: <ActivityApplicationsRoute />,
-              loader: activityApplicationsLoader
+              loader: loaderFactory((id) => `/activity/${id}/applications`)
             },
             {
               path: "attendances",
               element: <ActivityAttendancesRoute />,
-              loader: activityAttendancesLoader
+              loader: loaderFactory((id) => `/activity/${id}/attendances`)
             },
             {
               path: "statistics",
@@ -96,7 +93,13 @@ function App() {
         {
           path: "activities/update/:id",
           element: <UpdateActivityRoute />,
-          loader: activityViewLoader,
+          loader: loaderFactory((id) => `/activities/${id}`),
+          errorElement: <ErrorPage />
+        },
+        {
+          path: "applications",
+          element: <AllApplicationsRoute />,
+          loader: loaderFactory((id) => "/applications"),
           errorElement: <ErrorPage />
         },
         {

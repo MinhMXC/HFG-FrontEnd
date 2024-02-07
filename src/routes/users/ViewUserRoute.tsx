@@ -3,6 +3,7 @@ import img from "../../resources/cute anime girl.webp"
 import {ContactPhone, Email} from "@mui/icons-material";
 import {useLoaderData, useLocation, useNavigate} from "react-router-dom";
 import User from "../../interfaces/User";
+import fetchWithAuth from "../../helpers/fetchWithAuth";
 
 export default function ViewUserRoute() {
     const user = useLoaderData() as User
@@ -18,7 +19,18 @@ export default function ViewUserRoute() {
                     sx={{ width: 200, height: 200 }}
                 />
                 <div id="view-user-information-container">
-                    <h1 id="view-user-name">{user.full_name}</h1>
+                    <h1 id="view-user-name">
+                        {user.full_name}
+                        {
+                            user.is_current_user_admin && <Button
+                                variant="contained"
+                                sx={{ ml: "20px", mb: "5px" }}
+                                disableElevation
+                                onClick={() => fetchWithAuth(`/users/${user.id}/mark_as_administrator`, "POST")}
+                            >Mark As Administrator</Button>
+                        }
+                    </h1>
+
                     <p id="view-user-age">Age: {user.age}</p>
                     <p id="view-user-gender">Gender: {user.is_male ? "Male": "Female"}</p>
 
@@ -30,11 +42,17 @@ export default function ViewUserRoute() {
                     </div>
                 </div>
             </div>
-            <ButtonGroup variant="contained" disableElevation fullWidth sx={{ mt: "20px" }}>
-                <Button onClick={() => navigate(`/users/${user.id}/applications`)}>
+            <ButtonGroup disableElevation fullWidth sx={{ mt: "20px" }}>
+                <Button
+                    variant={pathname.slice(9) === "applications" ? "contained" : "outlined"}
+                    onClick={() => navigate(`/users/${user.id}/applications`)}
+                >
                     View All Applications
                 </Button>
-                <Button onClick={() => navigate(`/users/${user.id}/attendances`)}>
+                <Button
+                    variant={pathname.slice(9) === "attendances" ? "contained" : "outlined"}
+                    onClick={() => navigate(`/users/${user.id}/attendances`)}
+                >
                     View All Attendances
                 </Button>
             </ButtonGroup>

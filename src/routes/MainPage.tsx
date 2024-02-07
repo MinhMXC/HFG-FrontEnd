@@ -1,50 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import '../App.css'
-import fetchWithAuth from "../helpers/fetchWithAuth";
-import FetchResponse from "../interfaces/FetchResponse";
 import ActivityCard from "../components/ActivityCard";
 import Activity from "../interfaces/Activity";
-import {attributes} from "js-cookie";
-
-async function fetchData() {
-    try {
-        const response = await fetchWithAuth("/activities", 'GET');
-        console.log('Data fetched', response);
-        return response;
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-}
+import {useLoaderData} from "react-router-dom";
+import {Grid} from "@mui/material";
 
 export default function MainPage() {
-    const [data, setData] = useState<FetchResponse | undefined>(undefined);
+    const activities = (useLoaderData() as any).map((element: any) => element.attributes as Activity)
 
-    useEffect(() => {
-        const fetchDataAsync = async () => {
-            const result = await fetchData();
-            setData(result);
-        };
-
-        fetchDataAsync().then();
-    }, []);
     return (
-        <div className="item-container">
-            {data !== undefined ? (
-                <div className="items">
-                    {
-                        data.data.map((data: any) => {
-                            const attributes:Activity = data.attributes;
-                            return (
-                                <div className="item" key={data.id}>
-                                    <ActivityCard activity={attributes}/>
-                                </div>
-                            );
-                        })
-                    }
-                </div>
-            ) : (
-                <p>Loading...</p>
-            )}
-        </div>
+        // <div className="item-container">
+        //     {
+        //         activities.map((activity: any) => <ActivityCard key={activity.id} activity={activity} />)
+        //     }
+        // </div>
+        <Grid container sx={{ width: "900px", mt: "10px" }} spacing="20px">
+            {
+                activities.map((activity: any) =>
+                    <Grid item xs={6}>
+                        <ActivityCard key={activity.id} activity={activity} />
+                    </Grid>
+                )
+            }
+        </Grid>
     );
 }

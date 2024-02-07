@@ -15,8 +15,11 @@ export default function UserAttendancesRoute() {
                         <p>
                             <strong>Created At:</strong> {timeAgoTextGenerator(attendance.created_at)}
                         </p>
-                        <p>
-                            <strong>Status:</strong> {attendance.attended ? "Attended" : "Not Attended"}
+                        <p style={{ marginTop: "4px" }}>
+                            <strong>Status:&nbsp;</strong>
+                            <p className="status-text" style={{ color: attendance.attended ? "green" : "red" }}>
+                                {attendance.attended ? "Attended" : "Not Attended"}
+                            </p>
                         </p>
                         <Divider sx={{ mt: "10px", mb: "10px" }} />
                         <SimpleActivityCard activity={attendance.activity!} />

@@ -1,4 +1,3 @@
-import SimpleUser from "./SimpleUser";
 import Application from "./Application";
 
 export default interface Activity {
@@ -14,4 +13,5 @@ export default interface Activity {
     created_at: number,
     updated_at: number,
     application?: Application
+    is_current_user_admin: boolean
 }

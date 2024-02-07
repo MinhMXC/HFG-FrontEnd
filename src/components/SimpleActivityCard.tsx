@@ -7,7 +7,7 @@ export default function SimpleActivityCard(props: {
     return (
         <div>
             <p className="activity-text">
-                <strong>Activity&nbsp;</strong>
+                <a className="simple-activity-anchor" href={`/activities/${activity.id}`}>Activity&nbsp;</a>
                 <p style={{ display: "inline", fontSize: "17px" }}>(ID: {activity.id})</p>
             </p>
             <p style={{ marginTop: "5px" }}><strong>{activity.title}</strong></p>

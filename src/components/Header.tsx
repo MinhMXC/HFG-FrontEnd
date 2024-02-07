@@ -75,6 +75,8 @@ export default function Header() {
                 <Menu />
             </IconButton>
 
+            <a id="big-at-heart-header-text" href="/">Big At Heart</a>
+
             <SearchBar></SearchBar>
 
             {

@@ -73,6 +73,14 @@ header {
   margin-right: 20px;
 }
 
+#big-at-heart-header-text {
+  margin-left: 15px;
+  font-size: 34px;
+  font-weight: 700;
+  color: #FFF0F5;
+  text-decoration: none;
+}
+
 /*ErrorText*/
 .error-text {
   white-space: pre-line;
@@ -136,6 +144,11 @@ header {
   font-size: 30px;
 }
 
+.status-text {
+  font-weight: 500;
+  display: inline;
+}
+
 /*Create Activity*/
 
 #create-activity-container {
@@ -151,16 +164,17 @@ header {
   width: 900px;
 }
 
-#activity-title {
+#view-activity-title {
   margin: 0;
   font-size: 50px;
 }
 
 #about-this-activity {
+  margin-top: 0;
   margin-bottom: 5px;
 }
 
-#posted-on-container {
+.posted-on-container {
   color: #8a8a8a;
   display: flex;
   font-weight: 500;
@@ -179,6 +193,11 @@ header {
   font-weight: 500;
 }
 
+#activity-about-list {
+  padding: 0 0 0 20px;
+  margin: 5px 0 0 0;
+}
+
 /*ActivityAttendanceRoute*/
 
 .attendance_status {
@@ -189,7 +208,7 @@ header {
 /*mainpage*/
 
 .item-container {
-  width:100%;
+  width: 900px;
 }
 .items {
   display: flex;
@@ -209,27 +228,59 @@ header {
 
 /*activity card*/
 
-.card-body{
-  border-radius: 5px;
-  box-sizing: border-box;
-  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
-}
-.MuiCollapse-container {
-  transition-duration: 0.8s; /* Adjust the transition duration as needed */
-}
 
-.MuiCollapse-hidden {
-  width: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-}
-
-.MuiCollapse-wrapperInner {
-  overflow: hidden !important;
-}
 
 /*SimpleActivityCard*/
 
 .activity-text {
   font-size: 20px;
+}
+
+.simple-activity-anchor {
+  text-transform: none;
+  text-decoration: none;
+  font-weight: 700;
+  color: black;
+}
+
+/*Statistic*/
+
+.circle-chart__circle {
+  animation: circle-chart-fill 2s reverse; /* 1 */
+  transform: rotate(-90deg); /* 2, 3 */
+  transform-origin: center; /* 4 */
+}
+
+.circle-chart__circle--negative {
+  transform: rotate(-90deg) scale(1,-1); /* 1, 2, 3 */
+}
+
+.circle-chart__info {
+  animation: circle-chart-appear 2s forwards;
+  opacity: 0;
+  transform: translateY(0.3em);
+}
+
+@keyframes circle-chart-fill {
+  to { stroke-dasharray: 0 100; }
+}
+
+@keyframes circle-chart-appear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 31em) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

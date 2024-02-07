@@ -10,10 +10,14 @@ import {ListSubheader} from "@mui/material";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import {Email, Facebook, Instagram, YouTube} from "@mui/icons-material";
 import SimpleUser from "../interfaces/SimpleUser";
+import fetchWithAuth from "../helpers/fetchWithAuth";
+import {NavigateFunction, useNavigate} from "react-router-dom";
 
 interface ListProps {
     onClick: () => void,
-    onKeyDown: () => void
+    onKeyDown: () => void,
+    user_id: number,
+    navigate: NavigateFunction
 }
 
 function DefaultDrawerList(props: ListProps) {
@@ -67,6 +71,11 @@ function DefaultDrawerList(props: ListProps) {
     );
 }
 
+function logout(navigate: NavigateFunction) {
+    fetchWithAuth("/auth/sign_out", "DELETE")
+    navigate(0)
+}
+
 function UserDrawerList(props: ListProps) {
     return (
         <Box
@@ -82,10 +91,16 @@ function UserDrawerList(props: ListProps) {
                     <ListItemButton href="/">Homepage</ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton href="/">Applications</ListItemButton>
+                    <ListItemButton href={`/users/${props.user_id}`}>Account</ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton href="/">Attendances</ListItemButton>
+                    <ListItemButton href={`/users/${props.user_id}/applications`}>Applications</ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton href={`/users/${props.user_id}/attendances`}>Attendances</ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton onClick={() => logout(props.navigate)}>Logout</ListItemButton>
                 </ListItem>
             </List>
         </Box>
@@ -107,7 +122,7 @@ function AdminDrawerList(props: ListProps) {
                     <ListItemButton href="/activities/create">Create Activity</ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton href="/activities/create">View All Applications</ListItemButton>
+                    <ListItemButton href="/applications">View All Applications</ListItemButton>
                 </ListItem>
             </List>
         </Box>
@@ -122,6 +137,13 @@ export default function TemporaryDrawer(props: {
 }) {
     const user = props.user
     const fun = () => props.setOpen(false)
+    const params: ListProps = {
+        onClick: fun,
+        onKeyDown: fun,
+        user_id: user === undefined ? -1 : user.id,
+        navigate: useNavigate()
+    }
+
     return (
         <>
             <React.Fragment key="left">
@@ -138,20 +160,20 @@ export default function TemporaryDrawer(props: {
                         ? (
                             <>
                                 <Divider />
-                                <AdminDrawerList onClick={fun} onKeyDown={fun} />
+                                <AdminDrawerList {...params} />
                                 <Divider />
-                                <UserDrawerList onClick={fun} onKeyDown={fun} />
+                                <UserDrawerList {...params} />
                             </>
                         )
                         : (
                             <>
                                 <Divider />
-                                <UserDrawerList onClick={fun} onKeyDown={fun} />
+                                <UserDrawerList {...params} />
                             </>
                         )
                     }
                     <Divider />
-                    <DefaultDrawerList onClick={fun} onKeyDown={fun} />
+                    <DefaultDrawerList {...params} />
                 </Drawer>
             </React.Fragment>
         </>

@@ -4,7 +4,8 @@ import * as React from "react";
 import {Button} from "@mui/material";
 import fetchWithAuth from "../../helpers/fetchWithAuth";
 import {useState} from "react";
-import {useLoaderData} from "react-router-dom";
+import {useLoaderData, useNavigate} from "react-router-dom";
+import AdminActivityOptions from "../../components/AdminActivityOptions";
 
 async function applyOnClick(activity_id: number, applicationStatus: number, setApplicationStatus: Function) {
     if (applicationStatus === 1) {
@@ -29,8 +30,8 @@ async function applyOnClick(activity_id: number, applicationStatus: number, setA
 }
 
 export default function ActivityViewRoute() {
+    const navigate = useNavigate()
     const activity = (useLoaderData() as any) as Activity
-    console.log(activity)
     const application = activity.application
     const status = application === undefined || application === null
                    ? 0
@@ -46,11 +47,12 @@ export default function ActivityViewRoute() {
                        ? "Withdraw"
                        : "Accepted"
 
+
     return (
         <div className="standard-container" id="activity-container">
-            <h1 id="activity-title">{activity.title}</h1>
+            <h1 id="view-activity-title">{activity.title}</h1>
 
-            <div id="posted-on-container">
+            <div className="posted-on-container">
                 <p>Posted on: {new Date(activity.created_at * 1000).toLocaleString()}</p>
                 {
                     activity.created_at !== activity.updated_at &&
@@ -68,20 +70,27 @@ export default function ActivityViewRoute() {
             <Divider sx={{ mt: "20px", mb: "20px" }}/>
 
             <div>
-                <h2 id="about-this-activity">About this activity:</h2>
-                <li><span className="about-span">Manpower Needed:</span> {activity.manpower_needed}</li>
-                <li><span className="about-span">Location:</span> {activity.location}</li>
-                <li>
-                    <span className="about-span">Begins At:</span> {new Date(activity.time_start).toLocaleString()}
-                    <span className="about-span"> &nbsp;&nbsp;&nbsp;&nbsp;Ends At:</span> {new Date(activity.time_end).toLocaleString()}
-                </li>
+                <div style={{ display: "flex" }}>
+                    <h2 id="about-this-activity">About this activity:</h2>
+                    <div style={{ flexGrow: 1 }}></div>
+                    {activity.is_current_user_admin && <AdminActivityOptions navigate={navigate} activity_id={activity.id}/>}
+                </div>
+                <ul id="activity-about-list">
+                    <li><span className="about-span">Manpower Needed:</span> {activity.manpower_needed}</li>
+                    <li><span className="about-span">Location:</span> {activity.location}</li>
+                    <li>
+                        <span className="about-span">Begins At:</span> {new Date(activity.time_start).toLocaleString()}
+                        <span
+                            className="about-span"> &nbsp;&nbsp;&nbsp;&nbsp;Ends At:</span> {new Date(activity.time_end).toLocaleString()}
+                    </li>
+                </ul>
             </div>
 
             <Button
                 disableElevation
                 variant="contained"
                 onClick={() => applyOnClick(activity.id, applicationStatus, setApplicationStatus)}
-                sx={{ width: "100%", mt: "20px" }}
+                sx={{width: "100%", mt: "20px"}}
             >{buttonText}</Button>
         </div>
     );
