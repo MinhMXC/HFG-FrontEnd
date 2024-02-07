@@ -188,16 +188,44 @@ header {
 
 /*mainpage*/
 
-.activities-list {
-  padding-top: 10px;
-  max-height: 700px;
+.item-container {
+  width:100%;
+}
+.items {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
+  justify-content: flex-start;
+
 }
 .item {
-  margin: 20px;
-  padding: 3px;
+  flex: 0 0 auto;
+  background-color: white;
+  margin: 20px 5px 5px;
+  padding: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
+}
+
+/*activity card*/
+
+.card-body{
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
+}
+.MuiCollapse-container {
+  transition-duration: 0.8s; /* Adjust the transition duration as needed */
+}
+
+.MuiCollapse-hidden {
+  width: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.MuiCollapse-wrapperInner {
+  overflow: hidden !important;
 }
 
 /*SimpleActivityCard*/

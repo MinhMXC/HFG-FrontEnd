@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import ActivityCard from "../components/ActivityCard";
 import '../App.css'
 import fetchWithAuth from "../helpers/fetchWithAuth";
 import FetchResponse from "../interfaces/FetchResponse";
+import ActivityCard from "../components/ActivityCard";
+import Activity from "../interfaces/Activity";
+import {attributes} from "js-cookie";
 
 async function fetchData() {
     try {
@@ -14,7 +16,7 @@ async function fetchData() {
     }
 }
 
-function MainPage() {
+export default function MainPage() {
     const [data, setData] = useState<FetchResponse | undefined>(undefined);
 
     useEffect(() => {
@@ -26,115 +28,23 @@ function MainPage() {
         fetchDataAsync().then();
     }, []);
     return (
-        <>
-            <div className="activities-list">
-                <div className="item">
-                    {data !== undefined ? (
-
-                        <div>
-                            <ActivityCard id={data.data[0].id} title={data.data[0].attributes.title}
-                                          overview={data.data[0].attributes.overview}
-                                          body={data.data[0].attributes.body} image={data.data[0].attributes.image}
-                                          manpower_needed={data.data[0].attributes.manpower_needed}
-                                          location={data.data[0].attributes.location}
-                                          time_start={data.data[0].attributes.time_start}
-                                          time_end={data.data[0].attributes.time_end}
-                                          created_at={data.data[0].attributes.created_at}
-                                          updated_at={data.data[0].attributes.updated_at}
-
-                            />
-                            <p>Status: {data.status}</p>
-                            <p>Response Code: {data.response_code}</p>
-                            <p>{data.data[0].id}</p>
-                        </div>
-                    ) : (
-                        <p>Loading...</p>
-                    )}
+        <div className="item-container">
+            {data !== undefined ? (
+                <div className="items">
+                    {
+                        data.data.map((data: any) => {
+                            const attributes:Activity = data.attributes;
+                            return (
+                                <div className="item" key={data.id}>
+                                    <ActivityCard activity={attributes}/>
+                                </div>
+                            );
+                        })
+                    }
                 </div>
-                <div className="item">
-                    {data !== undefined ? (
-
-                        <div>
-                            <ActivityCard id={data.data[0].id} title={data.data[0].attributes.title}
-                                          overview={data.data[0].attributes.overview}
-                                          body={data.data[0].attributes.body} image={data.data[0].attributes.image}
-                                          manpower_needed={data.data[0].attributes.manpower_needed}
-                                          location={data.data[0].attributes.location}
-                                          time_start={data.data[0].attributes.time_start}
-                                          time_end={data.data[0].attributes.time_end}
-                                          created_at={data.data[0].attributes.created_at}
-                                          updated_at={data.data[0].attributes.updated_at}
-
-                            />
-                        </div>
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-
-                </div>
-                <div className="item">
-                    {data !== undefined ? (
-
-                        <div>
-                            <ActivityCard id={data.data[0].id} title={data.data[0].attributes.title}
-                                          overview={data.data[0].attributes.overview}
-                                          body={data.data[0].attributes.body} image={data.data[0].attributes.image}
-                                          manpower_needed={data.data[0].attributes.manpower_needed}
-                                          location={data.data[0].attributes.location}
-                                          time_start={data.data[0].attributes.time_start}
-                                          time_end={data.data[0].attributes.time_end}
-                                          created_at={data.data[0].attributes.created_at}
-                                          updated_at={data.data[0].attributes.updated_at}
-
-                            />
-                        </div>
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                </div>
-                <div className="item">
-                    {data !== undefined ? (
-
-                        <div>
-                            <ActivityCard id={data.data[0].id} title={data.data[0].attributes.title}
-                                          overview={data.data[0].attributes.overview}
-                                          body={data.data[0].attributes.body} image={data.data[0].attributes.image}
-                                          manpower_needed={data.data[0].attributes.manpower_needed}
-                                          location={data.data[0].attributes.location}
-                                          time_start={data.data[0].attributes.time_start}
-                                          time_end={data.data[0].attributes.time_end}
-                                          created_at={data.data[0].attributes.created_at}
-                                          updated_at={data.data[0].attributes.updated_at}
-
-                            />
-                        </div>
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                </div>
-                <div className="item">
-                    {data !== undefined ? (
-
-                        <div>
-                            <ActivityCard id={data.data[0].id} title={data.data[0].attributes.title}
-                                          overview={data.data[0].attributes.overview}
-                                          body={data.data[0].attributes.body} image={data.data[0].attributes.image}
-                                          manpower_needed={data.data[0].attributes.manpower_needed}
-                                          location={data.data[0].attributes.location}
-                                          time_start={data.data[0].attributes.time_start}
-                                          time_end={data.data[0].attributes.time_end}
-                                          created_at={data.data[0].attributes.created_at}
-                                          updated_at={data.data[0].attributes.updated_at}
-
-                            />
-                        </div>
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                </div>
-            </div>
-        </>
+            ) : (
+                <p>Loading...</p>
+            )}
+        </div>
     );
 }
-
-export default MainPage;
