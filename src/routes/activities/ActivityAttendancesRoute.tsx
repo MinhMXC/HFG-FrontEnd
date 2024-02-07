@@ -7,15 +7,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import timeAgoTextGenerator from "../../helpers/timeAgoTextGenerator";
-import ActivityAttendance from "../../interfaces/ActivityAttendance";
+import Attendance from "../../interfaces/Attendance";
 import Divider from "@mui/material/Divider";
 
 export default function ActivityAttendancesRoute() {
     const navigate = useNavigate()
     const { id } = useParams()
-    const attendances: ActivityAttendance[] = (useLoaderData() as any)
+    const attendances: Attendance[] = (useLoaderData() as any)
         .map((attendance: any) => {
-            const app: ActivityAttendance = {
+            const app: Attendance = {
                 attended: attendance.attributes.attended,
                 created_at: attendance.attributes.created_at,
                 updated_at: attendance.attributes.updated_at,
@@ -40,7 +40,7 @@ export default function ActivityAttendancesRoute() {
             const ids: number[] = []
             for (let i = 0; i < checked.length; i++)
                 if (checked[i])
-                    ids.push(users[i].id)
+                    ids.push(users[i]!.id)
 
             const res = await fetchWithAuth(
                 `/activity/${id}/attendances/${action}`,
@@ -70,7 +70,7 @@ export default function ActivityAttendancesRoute() {
             <List disablePadding>
                 {
                     attendances.map((attendance, index) => {
-                        const user = attendance.user
+                        const user = attendance.user!
                         return (
                             <>
                                 <ListItem key={user.id} sx={{ padding: 0, mt: "15px" }}>

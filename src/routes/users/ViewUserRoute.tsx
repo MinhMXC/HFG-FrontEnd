@@ -1,12 +1,12 @@
 import {Avatar, Button, ButtonGroup} from "@mui/material";
 import img from "../../resources/cute anime girl.webp"
 import {ContactPhone, Email} from "@mui/icons-material";
-import {useLoaderData, useLocation} from "react-router-dom";
+import {useLoaderData, useLocation, useNavigate} from "react-router-dom";
 import User from "../../interfaces/User";
-import fetchWithAuth from "../../helpers/fetchWithAuth";
 
 export default function ViewUserRoute() {
     const user = useLoaderData() as User
+    const navigate = useNavigate()
     const pathname = useLocation().pathname
 
     return (
@@ -31,10 +31,10 @@ export default function ViewUserRoute() {
                 </div>
             </div>
             <ButtonGroup variant="contained" disableElevation fullWidth sx={{ mt: "20px" }}>
-                <Button onClick={() => fetchWithAuth(`/user/${user.id}/applications`, "GET")}>
+                <Button onClick={() => navigate(`/users/${user.id}/applications`)}>
                     View All Applications
                 </Button>
-                <Button onClick={() => fetchWithAuth(`/user/${user.id}/attendances`, "GET")}>
+                <Button onClick={() => navigate(`/users/${user.id}/attendances`)}>
                     View All Attendances
                 </Button>
             </ButtonGroup>

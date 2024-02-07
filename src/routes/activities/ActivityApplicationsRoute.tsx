@@ -6,15 +6,15 @@ import React, {useState} from "react";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import {useLoaderData, useNavigate, useParams} from "react-router-dom";
 import fetchWithAuth from "../../helpers/fetchWithAuth";
-import ActivityApplication from "../../interfaces/ActivityApplication";
+import Application from "../../interfaces/Application";
 import timeAgoTextGenerator from "../../helpers/timeAgoTextGenerator";
 
 export default function ActivityApplicationsRoute() {
     const navigate = useNavigate()
     const { id } = useParams()
-    const applications: ActivityApplication[] = (useLoaderData() as any)
+    const applications: Application[] = (useLoaderData() as any)
         .map((application: any) => {
-            const app: ActivityApplication = {
+            const app: Application = {
                 accepted: application.attributes.accepted,
                 created_at: application.attributes.created_at,
                 user: application.attributes.user
@@ -38,7 +38,7 @@ export default function ActivityApplicationsRoute() {
         const ids: number[] = []
         for (let i = 0; i < checked.length; i++)
             if (checked[i])
-                ids.push(users[i].id)
+                ids.push(users[i]!.id)
 
         const res = await fetchWithAuth(`/activity/${id}/attendances`, "POST", { attendance: { user_ids: ids }})
         if (res.status === "error") {
@@ -64,7 +64,7 @@ export default function ActivityApplicationsRoute() {
             <List disablePadding>
                 {
                     applications.map((application, index) => {
-                        const user = application.user
+                        const user = application.user!
                         return (
                             <ListItem key={user.id} sx={{ padding: 0, mt: "15px" }}>
                                 <ListItemIcon>

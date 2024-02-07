@@ -20,7 +20,7 @@ async function applyOnClick(activity_id: number, applicationStatus: number, setA
         if (res.status === "error")
             alert(res.errors.full_messages)
         else {
-            alert("ActivityApplication successfully sent")
+            alert("Application successfully sent")
             setApplicationStatus(1)
         }
     } else {

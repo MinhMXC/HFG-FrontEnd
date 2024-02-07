@@ -19,6 +19,8 @@ import activityApplicationsLoader from "./loaders/activityApplicationsLoader";
 import ActivityViewRoute from "./routes/activities/ActivityViewRoute";
 import UserApplicationsRoute from "./routes/users/UserApplicationsRoute";
 import userApplicationsLoader from "./loaders/userApplicationsLoader";
+import UserAttendancesRoute from "./routes/users/UserAttendancesRoute";
+import userAttendancesLoader from "./loaders/userAttendancesLoader";
 
 function App() {
   const router = createBrowserRouter([
@@ -50,6 +52,11 @@ function App() {
               path: "applications",
               element: <UserApplicationsRoute />,
               loader: userApplicationsLoader,
+            },
+            {
+              path: "attendances",
+              element: <UserAttendancesRoute />,
+              loader: userAttendancesLoader,
             }
           ]
         },
