@@ -8,7 +8,7 @@ import {useLoaderData} from "react-router-dom";
 
 async function applyOnClick(activity_id: number, applicationStatus: number, setApplicationStatus: Function) {
     if (applicationStatus === 1) {
-        const res = await fetchWithAuth(`/applications/activity/${activity_id}`, "DELETE", { activity_id: activity_id })
+        const res = await fetchWithAuth(`/activity/${activity_id}/applications`, "DELETE", { activity_id: activity_id })
         if (res.status === "error")
             alert(res.errors.full_messages)
         else {
@@ -16,11 +16,11 @@ async function applyOnClick(activity_id: number, applicationStatus: number, setA
             setApplicationStatus(0)
         }
     } else if (applicationStatus === 0) {
-        const res = await fetchWithAuth(`/applications/activity/${activity_id}`, "POST", { activity_id: activity_id })
+        const res = await fetchWithAuth(`/activity/${activity_id}/applications`, "POST", { activity_id: activity_id })
         if (res.status === "error")
             alert(res.errors.full_messages)
         else {
-            alert("Application successfully sent")
+            alert("ActivityApplication successfully sent")
             setApplicationStatus(1)
         }
     } else {

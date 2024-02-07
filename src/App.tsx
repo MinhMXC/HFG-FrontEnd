@@ -4,7 +4,7 @@ import {createBrowserRouter, Navigate, Outlet, RouterProvider} from "react-route
 import AuthRoute from "./routes/AuthRoute";
 import Header from "./components/Header";
 import MainPage from "./routes/MainPage";
-import ViewUserRoute from "./routes/ViewUserRoute";
+import ViewUserRoute from "./routes/users/ViewUserRoute";
 import viewUserLoader from "./loaders/viewUserLoader";
 import ActivityBaseRoute from "./routes/activities/ActivityBaseRoute";
 import activityViewLoader from "./loaders/activityViewLoader";
@@ -17,6 +17,8 @@ import ActivityAttendancesRoute from "./routes/activities/ActivityAttendancesRou
 import activityAttendancesLoader from "./loaders/activityAttendancesLoader";
 import activityApplicationsLoader from "./loaders/activityApplicationsLoader";
 import ActivityViewRoute from "./routes/activities/ActivityViewRoute";
+import UserApplicationsRoute from "./routes/users/UserApplicationsRoute";
+import userApplicationsLoader from "./loaders/userApplicationsLoader";
 
 function App() {
   const router = createBrowserRouter([
@@ -40,9 +42,16 @@ function App() {
         },
         {
           path: "/users/:id",
-          element: <ViewUserRoute />,
+          element: <><ViewUserRoute /><Outlet /></>,
           loader: viewUserLoader,
           errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "applications",
+              element: <UserApplicationsRoute />,
+              loader: userApplicationsLoader,
+            }
+          ]
         },
         {
           path: "activities/:id",
@@ -83,10 +92,10 @@ function App() {
           loader: activityViewLoader,
           errorElement: <ErrorPage />
         },
-        // {
-        //   path: "*",
-        //   element: <Navigate to="/" replace/>
-        // },
+        {
+          path: "*",
+          element: <Navigate to="/" replace/>
+        },
       ]
     }
   ])

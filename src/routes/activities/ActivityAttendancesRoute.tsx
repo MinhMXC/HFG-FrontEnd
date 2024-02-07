@@ -7,15 +7,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import timeAgoTextGenerator from "../../helpers/timeAgoTextGenerator";
-import Attendance from "../../interfaces/Attendance";
+import ActivityAttendance from "../../interfaces/ActivityAttendance";
 import Divider from "@mui/material/Divider";
 
 export default function ActivityAttendancesRoute() {
     const navigate = useNavigate()
     const { id } = useParams()
-    const attendances: Attendance[] = (useLoaderData() as any)
+    const attendances: ActivityAttendance[] = (useLoaderData() as any)
         .map((attendance: any) => {
-            const app: Attendance = {
+            const app: ActivityAttendance = {
                 attended: attendance.attributes.attended,
                 created_at: attendance.attributes.created_at,
                 updated_at: attendance.attributes.updated_at,
@@ -94,7 +94,7 @@ export default function ActivityAttendancesRoute() {
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary={user.full_name}
-                                        secondary={`ID: ${user.id} (Accepted: ${timeAgoTextGenerator(attendance.created_at)})`}
+                                        secondary={`USER_ID: ${user.id} (Accepted: ${timeAgoTextGenerator(attendance.created_at)})`}
                                         sx={{ ml: "20px" }}
                                     />
                                     <p className="attendance_status" style={{ color: attendance.attended ? "green" : "red" }}>

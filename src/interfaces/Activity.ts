@@ -1,5 +1,5 @@
 import SimpleUser from "./SimpleUser";
-import Application from "./Application";
+import ActivityApplication from "./ActivityApplication";
 
 export default interface Activity {
     id: number,
@@ -13,5 +13,5 @@ export default interface Activity {
     time_end: number,
     created_at: number,
     updated_at: number,
-    application?: Application
+    application?: ActivityApplication
 }

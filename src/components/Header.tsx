@@ -87,7 +87,7 @@ export default function Header() {
                     : undefined
             }
 
-            <TemporaryDrawer open={open} setOpen={setOpen} toggleDrawer={toggleDrawer} />
+            <TemporaryDrawer user={user} open={open} setOpen={setOpen} toggleDrawer={toggleDrawer} />
         </header>
     )
 }

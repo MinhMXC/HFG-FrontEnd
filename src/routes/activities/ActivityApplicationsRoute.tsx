@@ -4,17 +4,17 @@ import {Avatar, Button, Checkbox, ListItemAvatar} from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import React, {useState} from "react";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import {NavigateFunction, useLoaderData, useNavigate, useParams} from "react-router-dom";
+import {useLoaderData, useNavigate, useParams} from "react-router-dom";
 import fetchWithAuth from "../../helpers/fetchWithAuth";
-import Application from "../../interfaces/Application";
+import ActivityApplication from "../../interfaces/ActivityApplication";
 import timeAgoTextGenerator from "../../helpers/timeAgoTextGenerator";
 
 export default function ActivityApplicationsRoute() {
     const navigate = useNavigate()
     const { id } = useParams()
-    const applications: Application[] = (useLoaderData() as any)
+    const applications: ActivityApplication[] = (useLoaderData() as any)
         .map((application: any) => {
-            const app: Application = {
+            const app: ActivityApplication = {
                 accepted: application.attributes.accepted,
                 created_at: application.attributes.created_at,
                 user: application.attributes.user
@@ -87,7 +87,7 @@ export default function ActivityApplicationsRoute() {
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={user.full_name}
-                                    secondary={`ID: ${user.id} (Applied: ${timeAgoTextGenerator(application.created_at)})`}
+                                    secondary={`USER_ID: ${user.id} (Applied: ${timeAgoTextGenerator(application.created_at)})`}
                                     sx={{ ml: "20px" }}
                                 />
                                 <p style={{ color: "red" }}>{errors.get(`${user.id}`)}</p>

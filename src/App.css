@@ -37,6 +37,13 @@ body {
   box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
 }
 
+#big-at-heart-text {
+  color: red;
+  font-weight: 700;
+  font-size: 30px;
+  margin: 15px 0 15px 15px;
+}
+
 /*Header*/
 
 header {
@@ -96,7 +103,7 @@ header {
 
 #view-user-container {
   display: flex;
-  width: 900px;
+  width: 860px;
   gap: 20px;
 }
 
@@ -122,6 +129,11 @@ header {
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+#application-text {
+  font-weight: 700;
+  font-size: 30px;
 }
 
 /*Create Activity*/
@@ -186,4 +198,10 @@ header {
 .item {
   margin: 20px;
   padding: 3px;
+}
+
+/*SimpleActivityCard*/
+
+.activity-text {
+  font-size: 20px;
 }
