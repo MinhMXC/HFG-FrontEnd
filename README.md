@@ -1,46 +1,84 @@
-# Getting Started with Create React App
+# HFG FRONTEND
+[Backend](https://github.com/MinhMXC/HFG-BackEnd)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is my submission for [HackForGood2024](https://dsc.comp.nus.edu.sg/hack4good), done during Jan-Feb 2024 in two weeks.
+My group and I chose to tackle Problem Statement 1, which is to "Develop a cost-effective system
+for volunteers to enroll, manage activities, and request certificates, while enabling nonprofit administrators
+to efficiently handle forms, attendance, and generate detailed reports."
 
-## Available Scripts
+Welcome to the Frontend Repository!
 
-In the project directory, you can run:
+This is built using React Typescript and Material UI, with React Router v6.
 
-### `npm start`
+## How to setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Things to note
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Because the app is supposed to be run in conjunction with the [Backend](https://github.com/MinhMXC/HFG-BackEnd),
+running it alone will not load any data and raise errors.
 
-### `npm test`
+The **default user** is ```email: imnotminh@gmail.com``` and ```password: 123456```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### IDE / Code Editor
+1. Clone the repository.
+2. Install Node.js, if you haven't.
+3. CD into the project folder.
+4. Run ```npm install``` to install all dependencies.
+5. Run ```npm start``` to start the project in development mode.
 
-### `npm run build`
+### Docker
+1. The project comes with a Dockerfile that can be easily build into an image and run.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Integration with Backend
+1. This requires [Docker](https://www.docker.com/) and Docker Compose.
+2. Clone both [FrontEnd](https://github.com/MinhMXC/HFG-FrontEnd) and [Backend](https://github.com/MinhMXC/HFG-BackEnd)
+   into an empty folder.
+3. Using VSCode or any editor, create a file docker-compose.yml in the folder.
+4. Open docker-compose.yml, paste these codes into the file and save.
+```yml
+version: "3"
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+services:
+  db:
+    image: postgres:16.1
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 123456
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  backend:
+    build: ./HFG-BackEnd
+    volumes:
+      - ./HFG-BackEnd:/usr/src/app
+    ports:
+      - 5000:5000
+    depends_on:
+      db:
+        condition: service_healthy
 
-### `npm run eject`
+  frontend:
+    build: ./HFG-FrontEnd
+    volumes:
+      - ./HFG-FrontEnd:/usr/src/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+volumes:
+  postgres:
+```
+5. Using the terminal, CD into the folder and run ```docker compose up```.
+6. Wait a while for all the images to be built and run.
+7. If there is no errors, the website will be hosted at localhost:3000 and can the Backend is exposed at localhost:5000.
+8. The **default user** is ```email: imnotminh@gmail.com``` and ```password: 123456```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Technical Documentation
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Please click on ```TechnicalDocs.md```

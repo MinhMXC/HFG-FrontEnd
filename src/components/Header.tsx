@@ -6,14 +6,7 @@ import fetchWithAuth from "../helpers/fetchWithAuth";
 import SimpleUser from "../interfaces/SimpleUser";
 import {NavigateFunction, useLocation, useNavigate} from "react-router-dom";
 import APP_CONSTANTS from "../helpers/CONSTANTS";
-
-function SearchBar() {
-    return (
-        <div id="search-bar-container">
-
-        </div>
-    )
-}
+import SearchBar from "./SearchBar";
 
 function LoginSignUpButtons(props: {
     navigate: NavigateFunction
