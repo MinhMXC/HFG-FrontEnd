@@ -3,6 +3,7 @@ import timeAgoTextGenerator from "../../helpers/timeAgoTextGenerator";
 import SimpleActivityCard from "../../components/SimpleActivityCard";
 import Divider from "@mui/material/Divider";
 import Attendance from "../../interfaces/Attendance";
+import {Button} from "@mui/material";
 
 export default function UserAttendancesRoute() {
     const attendances = (useLoaderData() as Array<any>).map(element => element.attributes as Attendance)
@@ -21,6 +22,13 @@ export default function UserAttendancesRoute() {
                                 {attendance.attended ? "Attended" : "Not Attended"}
                             </p>
                         </p>
+                        { attendance.attended &&
+                            <Button
+                                variant="contained"
+                                disableElevation
+                                sx={{ mt: "10px" }}
+                            >Request Certificates</Button>
+                        }
                         <Divider sx={{ mt: "10px", mb: "10px" }} />
                         <SimpleActivityCard activity={attendance.activity!} />
                     </div>

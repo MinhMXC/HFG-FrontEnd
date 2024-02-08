@@ -41,7 +41,7 @@ export default function SearchBar() {
                     placeholder="All Activities"
                     type="search"
                     fullWidth={true}
-                    sx={{ maxWidth: "1000px" }}
+                    sx={{ maxWidth: "1000px", mr: "50px" }}
                 />
             </div>
         </ThemeProvider>
